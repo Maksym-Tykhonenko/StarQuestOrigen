@@ -31,6 +31,10 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app uses the Photo Library to select a photo only.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to take a user avatar and photo to store in app private internal data set.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>
