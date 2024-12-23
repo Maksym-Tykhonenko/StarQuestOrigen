@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Pressable, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Pressable, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TabContext } from './navigation';
 import LinearGradient from 'react-native-linear-gradient';
@@ -107,8 +107,9 @@ export default function Quest({ navigation }: any) {
         </View>
       </View>
       {question === -1 ?
-        <View
-          style={styles.questContainer}
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.questContainer}
         >
           <QuestStar />
           <Text
@@ -191,7 +192,7 @@ export default function Quest({ navigation }: any) {
               </Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
         :
         <View
           style={[styles.container, {paddingHorizontal: 0}]}
@@ -201,39 +202,43 @@ export default function Quest({ navigation }: any) {
             style={{width: '100%', marginBottom: 20}}
             resizeMode={'contain'}
           />
-          <Text
-            style={[styles.text, {color: '#FFE998', marginBottom: 10}]}
-          >
-            Question {question + 1}
-          </Text>
-          <Text
-            style={styles.questionText}
-          >
-            {questions[question].question}
-          </Text>
-          {questions[question].options.map((option, index) => (
-            <TouchableOpacity 
-              key={index}
-              onPress={() => handleAnswerPress(index)}
-              activeOpacity={0.7}
-              style={styles.options}
+            <ScrollView
+              showsVerticalScrollIndicator={false}
             >
-              {
-                index === 0 ?
-                <A /> :
-                index === 1 ? 
-                <B /> : 
-                index === 2 ? 
-                <C /> :
-                <D />
-              }
               <Text
-                style={[styles.text]}
+                style={[styles.text, {color: '#FFE998', marginBottom: 10}]}
               >
-                {option}
+                Question {question + 1}
               </Text>
-            </TouchableOpacity>
-          ))}
+              <Text
+                style={styles.questionText}
+              >
+                {questions[question].question}
+              </Text>
+              {questions[question].options.map((option, index) => (
+                <TouchableOpacity 
+                  key={index}
+                  onPress={() => handleAnswerPress(index)}
+                  activeOpacity={0.7}
+                  style={styles.options}
+                >
+                  {
+                    index === 0 ?
+                    <A /> :
+                    index === 1 ? 
+                    <B /> : 
+                    index === 2 ? 
+                    <C /> :
+                    <D />
+                  }
+                  <Text
+                    style={[styles.text]}
+                  >
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
       </View>
       }
       <Pressable

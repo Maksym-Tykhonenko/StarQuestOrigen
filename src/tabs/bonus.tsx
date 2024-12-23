@@ -76,7 +76,7 @@ export default function Bonus({ navigation }: any) {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <View style={styles.container} showsVerticalScrollIndicator={false}>
       <View style={[styles.header, { height: 80 }]}>
         <View style={styles.header}>
           <Logo />
@@ -93,62 +93,66 @@ export default function Bonus({ navigation }: any) {
           </View>
         </View>
       </View>
-      <View style={styles.bonusContainer}>
-        <View style={{ alignItems: 'center' }}>
-          <BigStar />
-          <Text style={styles.title}>Get bonuses!</Text>
-          <Text style={[styles.text, { marginLeft: 0, textAlign: 'center' }]}>
-            Log in to the app every day and get bonuses
-          </Text>
-        </View>
-        <View style={styles.sizeBonusContainer}>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={[styles.bigText, { marginTop: 0, marginBottom: 10 }]}>
-              +{bonusCoins}
-            </Text>
-            <Text style={[styles.text, { marginLeft: 0 }]}>Coins</Text>
-          </View>
-          <View style={{ height: '100%', borderWidth: 0.5, borderColor: '#737373' }} />
-          <View style={{ alignItems: 'center' }}>
-            <Text style={[styles.bigText, { marginTop: 0, marginBottom: 10 }]}>
-              +{bonusStars}
-            </Text>
-            <Text style={[styles.text, { marginLeft: 0 }]}>Star</Text>
-          </View>
-        </View>
-        <Text style={[styles.text, { marginLeft: 0, textAlign: 'center' }]}>
-          The number of days you've visited
-        </Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-          {Array.from({ length: 7 }).map((_, index) => (
-            <View key={index} style={styles.bonusDayIndicator}>
-              {days > index ? (
-                <CompleteDay />
-              ) : (
-                <Text style={[styles.bigText, { marginTop: 0, marginBottom: 0 }]}>
-                  {index + 1}
-                </Text>
-              )}
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      <Pressable
-        onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
-        onPressOut={() => setColors(['#FFE998', '#57370D'])}
-        onPress={handleBonusClaim}
-        disabled={isButtonDisabled}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
       >
-        <LinearGradient
-          colors={colors}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientButton}
+        <View style={styles.bonusContainer}>
+          <View style={{ alignItems: 'center' }}>
+            <BigStar />
+            <Text style={styles.title}>Get bonuses!</Text>
+            <Text style={[styles.text, { marginLeft: 0, textAlign: 'center' }]}>
+              Log in to the app every day and get bonuses
+            </Text>
+          </View>
+          <View style={styles.sizeBonusContainer}>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={[styles.bigText, { marginTop: 0, marginBottom: 10 }]}>
+                +{bonusCoins}
+              </Text>
+              <Text style={[styles.text, { marginLeft: 0 }]}>Coins</Text>
+            </View>
+            <View style={{ height: '100%', borderWidth: 0.5, borderColor: '#737373' }} />
+            <View style={{ alignItems: 'center' }}>
+              <Text style={[styles.bigText, { marginTop: 0, marginBottom: 10 }]}>
+                +{bonusStars}
+              </Text>
+              <Text style={[styles.text, { marginLeft: 0 }]}>Star</Text>
+            </View>
+          </View>
+          <Text style={[styles.text, { marginLeft: 0, textAlign: 'center' }]}>
+            The number of days you've visited
+          </Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+            {Array.from({ length: 7 }).map((_, index) => (
+              <View key={index} style={styles.bonusDayIndicator}>
+                {days > index ? (
+                  <CompleteDay />
+                ) : (
+                  <Text style={[styles.bigText, { marginTop: 0, marginBottom: 0 }]}>
+                    {index + 1}
+                  </Text>
+                )}
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+        <Pressable
+          onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
+          onPressOut={() => setColors(['#FFE998', '#57370D'])}
+          onPress={handleBonusClaim}
+          disabled={isButtonDisabled}
         >
-          <Text style={styles.buttonText}>Continue</Text>
-        </LinearGradient>
-      </Pressable>
-    </ScrollView>
+          <LinearGradient
+            colors={colors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <Text style={styles.buttonText}>Continue</Text>
+          </LinearGradient>
+        </Pressable>
+      </ScrollView>
+    </View>
   );
 }
 
@@ -216,7 +220,7 @@ const styles = StyleSheet.create({
   gradientButton: {
     width: '100%',
     height: 50,
-    marginBottom: 30,
+    marginBottom: 120,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center'

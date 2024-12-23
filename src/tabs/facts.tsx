@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
-import { View, Text, Pressable, StyleSheet, Image, Animated, Dimensions } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Image, Animated, Dimensions, ScrollView } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TabContext } from './navigation';
 import LinearGradient from 'react-native-linear-gradient';
@@ -108,99 +108,101 @@ export default function Facts({ navigation }: any) {
           </View>
         </View>
       </View>
-      <Text
-        style={[styles.title, {paddingHorizontal: 30,}]}
-      >
-        Interesting facts about the stars
-      </Text>
-      <Animated.ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        snapToInterval={CARD_WIDTH + CARD_MARGIN * 2}
-        decelerationRate="fast"
-        contentContainerStyle={styles.scrollContainer}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: true }
-        )}
-        scrollEventThrottle={16}
-      >
-        {facts.map((item, index) => {
-          const inputRange = [
-            (index - 1) * (CARD_WIDTH + CARD_MARGIN * 2),
-            index * (CARD_WIDTH + CARD_MARGIN * 2),
-            (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2),
-          ];
-
-          const scale = scrollX.interpolate({
-            inputRange,
-            outputRange: [0.8, 1, 0.8],
-            extrapolate: 'clamp',
-          });
-
-          const opacity = scrollX.interpolate({
-            inputRange,
-            outputRange: [0.5, 1, 0.5],
-            extrapolate: 'clamp',
-          });
-
-          return (
-            <Animated.View
-              key={item.id}
-              style={[
-                styles.card,
-                {
-                  transform: [{ scale }],
-                  opacity,
-                },
-              ]}
-            >
-              <Image source={item.image} style={styles.image} />
-              <View
-                style={{padding: 20}}
-              >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    lineHeight: 23,
-                    color: '#FFE998',
-                  }}
-                >
-                  {item.fact}
-                </Text>
-                <Text 
-                  style={styles.descriptionText}
-                >
-                  {item.description}
-                </Text>
-              </View>
-              <RightArrow 
-                style={{
-                  position: 'absolute',
-                  bottom: -75,
-                  left: '60%',
-                  transform: [{ translateX: -50 }, { translateY: -50 }],
-                }}
-              />
-            </Animated.View>
-          );
-        })}
-      </Animated.ScrollView>
-      <Pressable
-        style={{paddingHorizontal: 30}}
-        onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
-        onPressOut={() => setColors(['#FFE998', '#57370D'])}
-        onPress={() => navigation.navigate('AddFact')}
-      >
-        <LinearGradient
-          colors={colors}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientButton}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text
+          style={[styles.title, {paddingHorizontal: 30,}]}
         >
-          <Text style={styles.buttonText}>Add facts</Text>
-        </LinearGradient>
-      </Pressable>
+          Interesting facts about the stars
+        </Text>
+        <Animated.ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          snapToInterval={CARD_WIDTH + CARD_MARGIN * 2}
+          decelerationRate="fast"
+          contentContainerStyle={styles.scrollContainer}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+            { useNativeDriver: true }
+          )}
+          scrollEventThrottle={16}
+        >
+          {facts.map((item, index) => {
+            const inputRange = [
+              (index - 1) * (CARD_WIDTH + CARD_MARGIN * 2),
+              index * (CARD_WIDTH + CARD_MARGIN * 2),
+              (index + 1) * (CARD_WIDTH + CARD_MARGIN * 2),
+            ];
+
+            const scale = scrollX.interpolate({
+              inputRange,
+              outputRange: [0.8, 1, 0.8],
+              extrapolate: 'clamp',
+            });
+
+            const opacity = scrollX.interpolate({
+              inputRange,
+              outputRange: [0.5, 1, 0.5],
+              extrapolate: 'clamp',
+            });
+
+            return (
+              <Animated.View
+                key={item.id}
+                style={[
+                  styles.card,
+                  {
+                    transform: [{ scale }],
+                    opacity,
+                  },
+                ]}
+              >
+                <Image source={item.image} style={styles.image} />
+                <View
+                  style={{padding: 20}}
+                >
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      lineHeight: 23,
+                      color: '#FFE998',
+                    }}
+                  >
+                    {item.fact}
+                  </Text>
+                  <Text 
+                    style={styles.descriptionText}
+                  >
+                    {item.description}
+                  </Text>
+                </View>
+                <RightArrow 
+                  style={{
+                    position: 'absolute',
+                    bottom: -75,
+                    left: '60%',
+                    transform: [{ translateX: -50 }, { translateY: -50 }],
+                  }}
+                />
+              </Animated.View>
+            );
+          })}
+        </Animated.ScrollView>
+        <Pressable
+          style={{paddingHorizontal: 30}}
+          onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
+          onPressOut={() => setColors(['#FFE998', '#57370D'])}
+          onPress={() => navigation.navigate('AddFact')}
+        >
+          <LinearGradient
+            colors={colors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+            style={styles.gradientButton}
+          >
+            <Text style={styles.buttonText}>Add facts</Text>
+          </LinearGradient>
+        </Pressable>
+      </ScrollView>
     </View>
   )
 };
@@ -223,6 +225,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingHorizontal: (width - CARD_WIDTH) / 2,
+    marginBottom: 50,
   },
   card: {
     marginTop: 80,
@@ -257,7 +260,7 @@ const styles = StyleSheet.create({
   gradientButton: {
     width: '100%',
     height: 50,
-    marginBottom: 130,
+    marginBottom: 120,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',

@@ -72,7 +72,7 @@ export default function Account({ navigation }: any) {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <View style={styles.container}>
       <View style={[styles.header, { height: 80 }]}>
         <View style={styles.header}>
           <Logo />
@@ -89,106 +89,112 @@ export default function Account({ navigation }: any) {
           </View>
         </View>
       </View>
-      <Text
-        style={styles.bigText}
-      >
-        My account
-      </Text>
-      <Pressable
-        style={{
-          alignItems: 'center',
-        }}
-        onPress={() => {
-          pickImage()
-        }}
-      >
-        {!imageUri ? 
-          <Avatar/>
-          :
-          <Image
-            source={{ uri: imageUri }}
-            style={{ 
-              width: 120,
-              height: 120,
-              borderRadius: 100,
-            }}
-            />
-        }
-          <Plus style={{
-            position: 'relative',
-            bottom: 30,
-            right: -45,
-          }} />
-      </Pressable>
-      <TextInput
-        style={[styles.input, {borderColor: borderColor, color: borderColor}]}
-        onChangeText={(value: string) => setName(value)}
-        value={name}
-        placeholder="Your Name"
-        editable={isEdit}
-        placeholderTextColor={borderColor}
-      />
-      <TextInput
-        style={[styles.input, {borderColor: borderColor, color: borderColor}]}
-        onChangeText={(value: string) => setLastName(value)}
-        value={lastName}
-        placeholder="Your Last Name"
-        editable={isEdit}
-        placeholderTextColor={borderColor}
-      />
-      <TextInput
-        style={[styles.input, {borderColor: borderColor, color: borderColor}]}
-        onChangeText={(value: string) => setNickName(value)}
-        value={nickName}
-        placeholder="It's Your Nickname"
-        editable={isEdit}
-        placeholderTextColor={borderColor}
-      />
-      <Pressable
-        onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
-        onPressOut={() => setColors(['#FFE998', '#57370D'])}
-        onPress={() => {
-          if(isEdit) {
-            setIsEdit(false)
-            setBorderColor('#F2F2F2')
-          } else {
-            setIsEdit(true)
-            setBorderColor('#737373')
-          }
-        }}
-      >
-        <LinearGradient
-          colors={colors}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientButton}
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Text
+          style={styles.bigText}
         >
-          {isEdit ?
-            <Text style={styles.buttonText}>Save</Text>
+          My account
+        </Text>
+        <Pressable
+          style={{
+            alignItems: 'center',
+          }}
+          onPress={() => {
+            pickImage()
+          }}
+        >
+          {!imageUri ? 
+            <Avatar/>
             :
-            <Text style={styles.buttonText}>Edit</Text>
+            <Image
+              source={{ uri: imageUri }}
+              style={{ 
+                width: 120,
+                height: 120,
+                borderRadius: 100,
+              }}
+              />
           }
-        </LinearGradient>
-      </Pressable>
-      <Pressable
-        onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
-        onPressOut={() => setColors(['#FFE998', '#57370D'])}
-        onPress={() => {
-          setName('')
-          setLastName('')
-          setNickName('')
-        }}
-      >
-        <LinearGradient
-          colors={colors}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={[styles.gradientButton, {marginTop: 15}]}
+            <Plus style={{
+              position: 'relative',
+              bottom: 30,
+              right: -45,
+            }} />
+        </Pressable>
+        <TextInput
+          style={[styles.input, {borderColor: borderColor, color: borderColor}]}
+          onChangeText={(value: string) => setName(value)}
+          value={name}
+          placeholder="Your Name"
+          editable={isEdit}
+          placeholderTextColor={borderColor}
+        />
+        <TextInput
+          style={[styles.input, {borderColor: borderColor, color: borderColor}]}
+          onChangeText={(value: string) => setLastName(value)}
+          value={lastName}
+          placeholder="Your Last Name"
+          editable={isEdit}
+          placeholderTextColor={borderColor}
+        />
+        <TextInput
+          style={[styles.input, {borderColor: borderColor, color: borderColor}]}
+          onChangeText={(value: string) => setNickName(value)}
+          value={nickName}
+          placeholder="It's Your Nickname"
+          editable={isEdit}
+          placeholderTextColor={borderColor}
+        />
+        <View
+          style={{marginBottom: 120}}
         >
-          <Text style={styles.buttonText}>Clear</Text>
-        </LinearGradient>
-      </Pressable>
-    </ScrollView>
+          <Pressable
+            onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
+            onPressOut={() => setColors(['#FFE998', '#57370D'])}
+            onPress={() => {
+              if(isEdit) {
+                setIsEdit(false)
+                setBorderColor('#F2F2F2')
+              } else {
+                setIsEdit(true)
+                setBorderColor('#737373')
+              }
+            }}
+          >
+            <LinearGradient
+              colors={colors}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradientButton}
+            >
+              {isEdit ?
+                <Text style={styles.buttonText}>Save</Text>
+                :
+                <Text style={styles.buttonText}>Edit</Text>
+              }
+            </LinearGradient>
+          </Pressable>
+          <Pressable
+            onPressIn={() => setColors(['#E5A663', '#FAEE9E'])}
+            onPressOut={() => setColors(['#FFE998', '#57370D'])}
+            onPress={() => {
+              setName('')
+              setLastName('')
+              setNickName('')
+            }}
+          >
+            <LinearGradient
+              colors={colors}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[styles.gradientButton, {marginTop: 15}]}
+            >
+              <Text style={styles.buttonText}>Clear</Text>
+            </LinearGradient>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 

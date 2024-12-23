@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
+  ScrollView,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { TabContext } from './navigation';
@@ -62,6 +63,34 @@ export default function Match3Game({ navigation }: any) {
   const [isRunning, setIsRunning] = useState(true);
   const soundRef = useRef<Sound | null>(null);
   const musicRef = useRef<Sound | null>(null);
+  const scrollEnabled = useRef(true);
+
+  const createPanResponder = (row: number, col: number) => {
+    return PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderGrant: () => {
+        scrollEnabled.current = false;
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        scrollEnabled.current = true;
+        const { dx, dy } = gestureState;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          if (dx > 0 && col < NUM_COLS - 1) {
+            swapTiles(row, col, row, col + 1);
+          } else if (dx < 0 && col > 0) {
+            swapTiles(row, col, row, col - 1);
+          }
+        } else {
+          if (dy > 0 && row < NUM_ROWS - 1) {
+            swapTiles(row, col, row + 1, col);
+          } else if (dy < 0 && row > 0) {
+            swapTiles(row, col, row - 1, col);
+          }
+        }
+      },
+    });
+  };
 
   function checkSound() {
     soundRef.current = soundInstance;
@@ -264,18 +293,6 @@ export default function Match3Game({ navigation }: any) {
     setGrid(newGrid);
   };
 
-  const createPanResponder = (row: number, col: number) => {
-    return PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderRelease: (_: any, gestureState: { dx: any; dy: any; }) => {
-        const { dx, dy } = gestureState;
-        if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
-          handleSwipe(row, col, dx, dy);
-        }
-      },
-    });
-  };
-
   return (
     <View style={styles.container}>
       <View style={[styles.header, { height: 80 }]}>
@@ -307,94 +324,103 @@ export default function Match3Game({ navigation }: any) {
           </View>
         </View>
       </View>
-      <View style={styles.grid}>
-        {grid.map((row, rowIndex) => (
-          <View key={rowIndex} style={styles.row}>
-            {row.map((tile, colIndex) => {
-              const panResponder = createPanResponder(rowIndex, colIndex);
-
-              return (
-                <Animated.View
-                  key={`${rowIndex}-${colIndex}`}
-                  style={styles.tile}
-                  {...panResponder.panHandlers}
-                >
-                  <Image source={tileImages[tile]} style={styles.tileImage} />
-                </Animated.View>
-              );
-            })}
-          </View>
-        ))}
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        showsVerticalScrollIndicator={false}
+        scrollEnabled={scrollEnabled.current}
       >
+        <View 
+          style={styles.grid}
+        >
+          {grid.map((row, rowIndex) => (
+            <View key={rowIndex} style={styles.row}>
+              {row.map((tile, colIndex) => {
+                const panResponder = createPanResponder(rowIndex, colIndex);
+
+                return (
+                  <Animated.View
+                    key={`${rowIndex}-${colIndex}`}
+                    style={styles.tile}
+                    {...panResponder.panHandlers}
+                  >
+                    <Image source={tileImages[tile]} style={styles.tileImage} />
+                  </Animated.View>
+                );
+              })}
+            </View>
+          ))}
+        </View>
         <View
           style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            marginBottom: 120,
           }}
         >
-          <Stars style={{marginBottom: 5}} />
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
               alignItems: 'center',
             }}
           >
-            <Text style={[styles.textCoins, {color: '#737373'}]}>Star </Text>
-            <Text
-              style={styles.textCoins}
+            <Stars style={{marginBottom: 5}} />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
             >
-              300/500
-            </Text>
+              <Text style={[styles.textCoins, {color: '#737373'}]}>Star </Text>
+              <Text
+                style={styles.textCoins}
+              >
+                300/500
+              </Text>
+            </View>
           </View>
-        </View>
-        <View>
-          <TouchableOpacity style={styles.restartButton} onPress={handleRestart}>
-            <Reset />
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity style={styles.restartButton} onPress={handleRestart}>
+              <Reset />
+            </TouchableOpacity>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <Text style={[styles.textCoins, {color: '#737373'}]}>Timer: </Text>
+              <Text
+                style={styles.textCoins}
+              >
+                {formatTime(elapsedTime)}
+              </Text>
+            </View>
+          </View>
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
           >
-            <Text style={[styles.textCoins, {color: '#737373'}]}>Timer: </Text>
-            <Text
-              style={styles.textCoins}
+            <Coins style={{marginBottom: 5}} />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
             >
-              {formatTime(elapsedTime)}
-            </Text>
+              <Text style={[styles.textCoins, {color: '#737373'}]}>Coins </Text>
+              <Text
+                style={styles.textCoins}
+              >
+                1100/2000
+              </Text>
+            </View>
           </View>
         </View>
-        <View
-          style={{
-            alignItems: 'center',
-          }}
-        >
-          <Coins style={{marginBottom: 5}} />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <Text style={[styles.textCoins, {color: '#737373'}]}>Coins </Text>
-            <Text
-              style={styles.textCoins}
-            >
-              1100/2000
-            </Text>
-          </View>
-        </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }
