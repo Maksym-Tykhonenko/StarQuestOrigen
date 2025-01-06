@@ -161,10 +161,10 @@ function App() {
 
             setAdServicesAtribution(attribution);
             //setAdServicesKeywordId(keywordId);
-            setSab1(attribution ? 'asa' : '__');
+            setSab1(attribution ? 'asa' : '');
             // Вывод значений в консоль
-          Alert.alert(`sab1: ${sab1}`);
-          Alert.alert(`Attribution: ${attribution}`);
+          //Alert.alert(`sab1: ${sab1}`);
+          //Alert.alert(`Attribution: ${attribution}`);
             //console.log(`Attribution: ${attribution}` + `KeywordId:${keywordId}`);
         } catch (error) {
             const { message } = error;
@@ -414,7 +414,7 @@ useEffect(() => {
         const checkUrl = `${INITIAL_URL}${URL_IDENTIFAIRE}`;
         //console.log(checkUrl);
 
-        const targetData = new Date('2025-01-06T10:00:00'); //дата з якої поч працювати webView
+        const targetData = new Date('2025-01-10T10:00:00'); //дата з якої поч працювати webView
         const currentData = new Date(); //текущая дата
 
         if (!route) {
