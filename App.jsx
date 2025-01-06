@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet, Image, Animated, View, Text} from 'react-native';
+import {StyleSheet, Image, Animated, View, Text, Alert} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Loading from './src/screens/loading';
@@ -103,7 +103,8 @@ function App() {
                 await getUidApps();
                 //await fetchAdServicesAttributionData(); // Вставка функції для отримання даних
 
-                onInstallConversionDataCanceller();
+              onInstallConversionDataCanceller();
+              //Alert.alert(`Attribution: ${adServicesAtribution}`);
             }
         } catch (e) {
             console.log('Помилка отримання даних в getData:', e);
@@ -161,9 +162,9 @@ function App() {
 
             setAdServicesAtribution(attribution);
             //setAdServicesKeywordId(keywordId);
-            setSab1(atribution ? 'asa' : '');
+            setSab1(atribution ? 'asa' : '__');
             // Вывод значений в консоль
-            //Alert.alert(`Attribution: ${attribution}`);
+            Alert.alert(`Attribution: ${adServicesAtribution}`);
             //console.log(`Attribution: ${attribution}` + `KeywordId:${keywordId}`);
         } catch (error) {
             const { message } = error;
@@ -527,7 +528,7 @@ useEffect(() => {
             //backgroundColor: 'rgba(0,0,0)',
           }}>
           <Animated.Image
-            source={require('./assets/back/loader1.png')}
+            source={require('./assets/back/loader1.webp')}
             style={{
               //...props.style,
               opacity: appearingAnim,
@@ -537,7 +538,7 @@ useEffect(() => {
             }}
           />
           <Animated.Image
-            source={require('./assets/back/loader2.png')}
+            source={require('./assets/back/loader2.jpg')}
             style={{
               //...props.style,
               opacity: appearingSecondAnim,
