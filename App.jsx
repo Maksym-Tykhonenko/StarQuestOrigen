@@ -104,7 +104,6 @@ function App() {
                 //await fetchAdServicesAttributionData(); // Вставка функції для отримання даних
 
               onInstallConversionDataCanceller();
-              //Alert.alert(`Attribution: ${adServicesAtribution}`);
             }
         } catch (e) {
             console.log('Помилка отримання даних в getData:', e);
@@ -162,9 +161,10 @@ function App() {
 
             setAdServicesAtribution(attribution);
             //setAdServicesKeywordId(keywordId);
-            setSab1(atribution ? 'asa' : '__');
+            setSab1(attribution ? 'asa' : '__');
             // Вывод значений в консоль
-            Alert.alert(`Attribution: ${adServicesAtribution}`);
+          Alert.alert(`sab1: ${sab1}`);
+          Alert.alert(`Attribution: ${attribution}`);
             //console.log(`Attribution: ${attribution}` + `KeywordId:${keywordId}`);
         } catch (error) {
             const { message } = error;
