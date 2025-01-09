@@ -29,7 +29,7 @@ export default function Loading({ navigation }: any) {
 
   return (
     <ImageBackground
-      source={require('../../assets/png/background.png')}
+      source={require('../../assets/back/bcgr.png')}
       resizeMode='cover'
       style={{
         flex: 1,

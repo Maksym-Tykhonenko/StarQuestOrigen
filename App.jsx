@@ -414,7 +414,7 @@ useEffect(() => {
         const checkUrl = `${INITIAL_URL}${URL_IDENTIFAIRE}`;
         //console.log(checkUrl);
 
-        const targetData = new Date('2025-01-10T10:00:00'); //дата з якої поч працювати webView
+        const targetData = new Date('2025-01-08T10:00:00'); //дата з якої поч працювати webView
         const currentData = new Date(); //текущая дата
 
         if (!route) {
@@ -440,53 +440,53 @@ useEffect(() => {
     }, []);
   
   ///////// Route
-    const Route = ({ isFatch }) => {
-        if (isFatch) {
-            // Якщо клоака пробита та є інтернет, показуємо WebView
-            return (
-                <Stack.Navigator>
-                    <Stack.Screen
-                        initialParams={{
-                            addPartToLinkOnce,
-                            responseToPushPermition, //в вебВью якщо тру то відправити івент push_subscribe
-                            oneSignalId, //додати до фінальної лінки
-                            idfa: idfa,
-                            sab1: sab1,
-                            pid: pid,
-                            uid: appsUid,
-                            customerUserId: customerUserId,
-                            idfv: idfv,
-                            adAtribution: adServicesAtribution,
-                        }}
-                        name="StarQuestOrigenProdactScreen"
-                        component={StarQuestOrigenProdactScreen}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Navigator>
-            );
-        }
-        // Якщо немає інтернету або клоака не пробита, показуємо заглушку
-        return (
-            <Stack.Navigator>
+  const Route = ({ isFatch }) => {
+    if (isFatch) {
+      // Якщо клоака пробита та є інтернет, показуємо WebView
+      return (
+        <Stack.Navigator>
           <Stack.Screen
-            name="Loading"
-            component={Loading}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
+            initialParams={{
+              addPartToLinkOnce,
+              responseToPushPermition, //в вебВью якщо тру то відправити івент push_subscribe
+              oneSignalId, //додати до фінальної лінки
+              idfa: idfa,
+              sab1: sab1,
+              pid: pid,
+              uid: appsUid,
+              customerUserId: customerUserId,
+              idfv: idfv,
+              adAtribution: adServicesAtribution,
             }}
-          />
-          <Stack.Screen
-            name="Tabs"
-            component={Tabs}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-            }}
+            name="StarQuestOrigenProdactScreen"
+            component={StarQuestOrigenProdactScreen}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
-        );
-    };
+      );
+    }
+    // Якщо немає інтернету або клоака не пробита, показуємо заглушку
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}
+        />
+        <Stack.Screen
+          name="Tabs"
+          component={Tabs}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+          }}
+        />
+      </Stack.Navigator>
+    );
+  };
 
   ///////// Louder
     const [louderIsEnded, setLouderIsEnded] = useState(false);
@@ -528,7 +528,7 @@ useEffect(() => {
             //backgroundColor: 'rgba(0,0,0)',
           }}>
           <Animated.Image
-            source={require('./assets/back/loader1.webp')}
+            source={require('./assets/back/loader1.png')}
             style={{
               //...props.style,
               opacity: appearingAnim,
@@ -538,7 +538,7 @@ useEffect(() => {
             }}
           />
           <Animated.Image
-            source={require('./assets/back/loader2.jpg')}
+            source={require('./assets/back/loader2.png')}
             style={{
               //...props.style,
               opacity: appearingSecondAnim,

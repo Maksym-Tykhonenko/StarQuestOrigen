@@ -463,13 +463,13 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
         source={{
           uri: product,
         }}
-        //onOpenWindow={syntheticEvent => {
-        //  const {nativeEvent} = syntheticEvent;
-        //  const {targetUrl} = nativeEvent;
-        //  //console.log('syntheticEvent==>', syntheticEvent);
-        //  console.log('nativeEvent', nativeEvent);
-        //  console.log('targetUrl', targetUrl);
-        //}}
+        onOpenWindow={syntheticEvent => {
+          const {nativeEvent} = syntheticEvent;
+          const {targetUrl} = nativeEvent;
+          //console.log('syntheticEvent==>', syntheticEvent);
+          console.log('nativeEvent', nativeEvent);
+          console.log('targetUrl', targetUrl);
+        }}
         //onError={syntheticEvent => {
         //  const {nativeEvent} = syntheticEvent;
         //  const url = nativeEvent.url;
