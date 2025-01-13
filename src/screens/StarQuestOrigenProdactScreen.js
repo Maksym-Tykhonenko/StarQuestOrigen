@@ -219,7 +219,7 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
     (pid ? `&pid=${pid}` : '') +
     (!addPartToLinkOnce ? `&yhugh=true` : '');
 
-  console.log('My product Url ==>', product);
+  //console.log('My product Url ==>', product);
 
   //const customUserAgent = `Mozilla/5.0 (${deviceInfo.deviceSystemName}; ${deviceInfo.deviceModel}) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1`;
   //const customUserAgent = `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0`;
@@ -246,7 +246,7 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
   const handleNavigationStateChange = navState => {
     const {url} = navState;
     //console.log('NavigationState: ', navState);
-    //console.log('navState: ', navState);
+    console.log('navState: ', navState);
     if (
       url.includes(
         'https://api.paymentiq.io/paymentiq/api/piq-redirect-assistance',
@@ -275,7 +275,16 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
       //  `window.location.href = 'https://payment.paydmeth.com/en/cointy-white/payment/e82e61d0-1d94-4dcd-8b35-6122c69bae1a'`,
       //);
       console.log('WWWWW');
-    } else if (
+    } //else if (url.includes('https://pay.neosurf.com/')) {
+    //Linking.openURL(
+    //  `https://gate.mrbl.cc/payments/process/8f014710-d197-11ef-9147-f66ced1ab50b?_locale=en-AU`,
+    //);
+    //refWebview.current.injectJavaScript(
+    //  `window.location.href = 'https://gate.mrbl.cc/payments/process/8f014710-d197-11ef-9147-f66ced1ab50b?_locale=en-AU'`,
+    //);
+    //console.log('WWWWW');
+    //}
+    else if (
       url.includes('neteller') ||
       url.includes('rapidtransfer') ||
       //url.includes('skrill') ||
@@ -289,7 +298,8 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
 
   const onShouldStartLoadWithRequest = event => {
     const {url} = event;
-    //console.log('onShouldStartLoadWithRequest========> ', event);
+    console.log('onShouldStartLoadWithRequest========> ', event);
+    //console.log('onShouldStartLoadWithRequest========> ', request);
 
     if (url.startsWith('mailto:')) {
       Linking.openURL(url);
@@ -371,7 +381,13 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
         `window.location.href = '${redirectUrl}'`,
       );
       return false;
-    } else if (url.includes('secure.livechatinc.com/customer/action/')) {
+    } //else if (url.includes('https://gate.mrbl.cc/payments/process/')) {
+    //refWebview.current.injectJavaScript(
+    //  `window.location.href = 'https://pay.neosurf.com/'`,
+    //);
+    //return false;
+    //}
+    else if (url.includes('secure.livechatinc.com/customer/action/')) {
       //refWebview?.current?.goBack();
       return false;
     } else if (url.startsWith('bncmobile://')) {
@@ -482,18 +498,37 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
           //console.log('syntheticEvent==>', syntheticEvent);
           console.log('nativeEvent', nativeEvent);
           console.log('targetUrl', targetUrl);
+          if (nativeEvent.targetUrl === 'https://pay.neosurf.com/') {
+            //console.log('Hello!!!!!!!!!!!!!!!!!!!!!');
+            //Linking.openURL('https://www.eneba.com/checkout/payment');
+            refWebview.current.injectJavaScript(
+              `window.location.href = 'https://www.myneosurf.com/en_GB/application/login/client'`,
+            );
+            return false;
+          } else if (
+            nativeEvent.targetUrl.includes(
+              'https://checkout.payop.com/en/payment/invoice-preprocessing/',
+            )
+          ) {
+            //console.log('Hello!!!!!!!!!!!!!!!!!!!!!');
+            //Linking.openURL('https://www.eneba.com/checkout/payment');
+            refWebview.current.injectJavaScript(
+              `window.location.href = '${nativeEvent.targetUrl}'`,
+            );
+            return false;
+          }
         }}
-        //onError={syntheticEvent => {
-        //  const {nativeEvent} = syntheticEvent;
-        //  const url = nativeEvent.url;
-        //  //console.warn('WebView error url ', nativeEvent.url);
-        //  // Якщо це специфічний URL, ігноруємо помилку
-        //  if (url.startsWith('bncmobile://')) {
-        //    return;
-        //  }
-        //
-        //  Alert.alert('Error', `Failed to load URL: ${url}`, [{text: 'OK'}]);
-        //}}
+        onError={syntheticEvent => {
+          const {nativeEvent} = syntheticEvent;
+          const url = nativeEvent.url;
+          console.warn('WebView error url ', nativeEvent.url);
+          // Якщо це специфічний URL, ігноруємо помилку
+          if (url.startsWith('bncmobile://')) {
+            return;
+          }
+
+          Alert.alert('Error', `Failed to load URL: ${url}`, [{text: 'OK'}]);
+        }}
         textZoom={100}
         allowsBackForwardNavigationGestures={true}
         domStorageEnabled={true}
