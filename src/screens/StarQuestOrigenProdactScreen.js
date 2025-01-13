@@ -246,7 +246,7 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
   const handleNavigationStateChange = navState => {
     const {url} = navState;
     //console.log('NavigationState: ', navState);
-    console.log('navState: ', navState);
+    //console.log('navState: ', navState);
     if (
       url.includes(
         'https://api.paymentiq.io/paymentiq/api/piq-redirect-assistance',
@@ -298,7 +298,7 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
 
   const onShouldStartLoadWithRequest = event => {
     const {url} = event;
-    console.log('onShouldStartLoadWithRequest========> ', event);
+    //console.log('onShouldStartLoadWithRequest========> ', event);
     //console.log('onShouldStartLoadWithRequest========> ', request);
 
     if (url.startsWith('mailto:')) {
@@ -496,8 +496,8 @@ const StarQuestOrigenProdactScreen = ({navigation, route}) => {
           const {nativeEvent} = syntheticEvent;
           const {targetUrl} = nativeEvent;
           //console.log('syntheticEvent==>', syntheticEvent);
-          console.log('nativeEvent', nativeEvent);
-          console.log('targetUrl', targetUrl);
+          //console.log('nativeEvent', nativeEvent);
+          //console.log('targetUrl', targetUrl);
           if (nativeEvent.targetUrl === 'https://pay.neosurf.com/') {
             //console.log('Hello!!!!!!!!!!!!!!!!!!!!!');
             //Linking.openURL('https://www.eneba.com/checkout/payment');

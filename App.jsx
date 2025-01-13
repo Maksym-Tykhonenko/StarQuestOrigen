@@ -337,7 +337,7 @@ useEffect(() => {
         }
     };
 
-    // 2ND FUNCTION - Ottrimannya UID AppsFlyer
+    // 2ND FUNCTION - Ottrimannya UID AppsFlyer.
     const getUidApps = async () => {
         try {
             const appsFlyerUID = await new Promise((resolve, reject) => {
